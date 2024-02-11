@@ -5,6 +5,8 @@ the `Makefile` in order to setup the project.
 
 ## Usage
 
+Create a `build` directory in the root project directory first.
+
 ### Adding Libraries
 
 Ensure that for any project you make, if you are adding any libraries, you
