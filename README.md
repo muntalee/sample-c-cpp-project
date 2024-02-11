@@ -26,12 +26,14 @@ contains a `lib/` and `include/` directory.
 For any other modificiations, edit any of the other variables inside the
 `Makefile` as you wish to do so.
 
-## MacOS Users
+## OS Specifics
+
+### MacOS Users
 
 If you're on MacOS, I recommend following the examples inside the comments of
 the `Makefile`.
 
-# Other OS Users
+### Other OS Users
 
 If you're on another OS, I recommend creating a `lib` directory in the project,
 then adding your respected libraries inside it, that you look like this:
@@ -46,4 +48,17 @@ then adding your respected libraries inside it, that you look like this:
 BASE_PATHS ?= lib
 LIBS ?= sdl2
 LIB_FLAGS := -lSDL2
+```
+## For Vim/Neovim Users
+
+You may experience errors when programming, as well as no autocomplete in your
+LSP. This can be fixed with a `compile_commands.json` under the root project
+directory. You can create one through [this
+link](https://texttoolkit.com/compilation-database-generator).
+
+Copy the output of the following command below into the textbox and click
+`Generate!`:
+
+```bash
+make -nw
 ```

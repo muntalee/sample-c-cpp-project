@@ -1,6 +1,12 @@
 #include <iostream>
+#include "example.hpp"
+
 
 int main (int argc, char *argv[]) {
-    std::cout << "Hello World!" << std::endl;
+    helloworld();
     return 0;
+}
+
+void helloworld() {
+    std::cout << "Hello World!" << std::endl;
 }
