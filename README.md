@@ -5,6 +5,8 @@ the `Makefile` in order to setup the project.
 
 ## Usage
 
+### Adding Libraries
+
 Ensure that for any project you make, if you are adding any libraries, you
 **MUST** update these variables in the `Makefile`:
 
@@ -18,6 +20,11 @@ LIB_FLAGS :=
 
 **PLEASE NOTE**: For each directory you add under `LIBS`, make sure the folder
 contains a `lib/` and `include/` directory.
+
+### Other modifications
+
+For any other modificiations, edit any of the other variables inside the
+`Makefile` as you wish to do so.
 
 ## MacOS Users
 
