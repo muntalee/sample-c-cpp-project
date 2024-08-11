@@ -1,64 +1,54 @@
-# Optional: add your base path to where your libraries are
-# Example: BASE_PATHS := /opt/homebrew/Cellar
-BASE_PATHS ?= .
+CXX = g++
+OUTPUT = out
+SRC =  src/main.cpp
+# add other source files like so:
+# SRC += $(wildcard external/imgui/*.cpp)
+# SRC += $(wildcard external/imgui-sfml/*.cpp)
+OBJ_DIR = obj
+OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-# Optional: add library paths within base path
-# Ensure that for each directory contains a 'include/' and 'lib/'
-# with its respective libraries.
-# Example: LIBS := sdl2/2.30.0
-LIBS ?=  
+# our compiler flags
+CXXFLAGS = -std=c++20 -O3 -Wno-unused-result -Iinclude
+# add external include dirs
+# example:
+# CXXFLAGS += -I/opt/homebrew/include -Iexternal/imgui -Iexternal/imgui-sfml
 
-INCLUDES := -Iinclude
-LINKER_FLAGS :=
+# our linker flags
+LDFLAGS =
+# add external linkers
+# example:
+# LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-# Function to add library paths only if they exist
-define add_library
-    ifneq ($(wildcard $(BASE_PATHS)/$1/include),)
-        INCLUDES += -I$(BASE_PATHS)/$1/include
-    endif
-    ifneq ($(wildcard $(BASE_PATHS)/$1/lib),)
-        LINKER_FLAGS += -L$(BASE_PATHS)/$1/lib
-    endif
-endef
-
-# Call the function for each library only if LIBS is not empty
-ifneq ($(strip $(LIBS)),)
-    $(foreach lib,$(LIBS),$(eval $(call add_library,$(lib))))
+# specific configs for macos
+ifeq ($(shell uname -s), Darwin)
+	# example:
+	# LDFLAGS += -L/opt/homebrew/lib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+	# CXXFLAGS += -I/opt/homebrew/include -Iexternal/imgui -Iexternal/imgui-sfml
 endif
 
-# Compile-specific commands
-CC := g++
-CFLAGS := -Wall -ldl -lpthread -lm
-
-# Define your library flags here
-# Example: LIB_FLAGS := -lSDL2
-LIB_FLAGS :=
-
-OS := $(shell uname)
-ifeq ($(OS),Darwin)
-    # Mac OS X specific commands
+# specific configs for linux
+ifeq ($(shell uname -s), Linux)
+	# LDFLAGS += -ldl -lpthread -lGL
 endif
 
-ifeq ($(OS),Linux)
-    # Linux specific commands
-endif
 
-ifeq ($(OS),WindowsNT)
-    # Windows specific commands
-endif
+.PHONY: all clean run
 
-SRCS := $(wildcard src/*.cpp)
+all: $(OBJ_DIR) $(OUTPUT)
 
-# Change this to what you want your output name to be
-OUTPUT := my_program
+$(OUTPUT): $(OBJ)
+	$(CXX) $^ -o $@ $(LDFLAGS)
 
-.PHONY: build clean
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) -c $< -o $@ $(CXXFLAGS)
 
-build: $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $^ -o build/$(OUTPUT) $(LINKER_FLAGS) $(LIB_FLAGS)
-
-run: build
-	./build/$(OUTPUT)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf build/*
+	rm -rf $(OBJ_DIR) $(OUTPUT) .cache .DS_Store
+
+run: all
+	./$(OUTPUT)
+
