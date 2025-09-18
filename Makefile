@@ -1,17 +1,27 @@
 BUILD_DIR = build
 EXE = game
 
+# detect OS
+ifeq ($(OS),Windows_NT)
+    RM = rmdir /S /Q
+    EXE_EXT = .exe
+    RUN = $(BUILD_DIR)\bin\$(EXE)$(EXE_EXT)
+else
+    RM = rm -rf
+    EXE_EXT =
+    RUN = ./$(BUILD_DIR)/bin/$(EXE)$(EXE_EXT)
+endif
+
 compile: build
 	cmake --build $(BUILD_DIR)
 
 build:
-	cmake -S . -B $(BUILD_DIR) -DCMAKE_EXPORT_COMPILE_COMMANDS=on
+	cmake -S . -B $(BUILD_DIR) -G "Ninja" -DCMAKE_EXPORT_COMPILE_COMMANDS=on
 
 clean:
-	rm -rf $(BUILD_DIR)
+	$(RM) $(BUILD_DIR)
 
 run: compile
-	./$(BUILD_DIR)/bin/$(EXE)
+	$(RUN)
 
 all: run
-

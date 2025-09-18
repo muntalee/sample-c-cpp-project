@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(game LANGUAGES CXX)
+project(game VERSION 1.0)
 
 set(OUT ${CMAKE_PROJECT_NAME})
 file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
