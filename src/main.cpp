@@ -1,14 +1,9 @@
 #include <iostream>
-#include "example.hpp"
 
 
 int main (int argc, char *argv[])
 {
-    helloworld();
+    std::cout << "Hello world" << std::endl;
     return 0;
 }
 
-void helloworld()
-{
-    std::cout << "Hello World!" << std::endl;
-}
