@@ -19,4 +19,4 @@ target_include_directories(${OUT} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 # link libraries
 find_package(OpenGL REQUIRED)
 
-target_link_libraries(${OUT} PRIVATE glfw ${OPENGL_gl_LIBRARY})
+target_link_libraries(${OUT} PRIVATE glfw OpenGL::GL)
