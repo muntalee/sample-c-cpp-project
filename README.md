@@ -13,6 +13,12 @@ A `Makefile` is included to make building and running the project consistent acr
   * MSVC (Visual Studio) or MinGW on Windows
 * **Ninja** (build tool)
 
+## Download
+
+```
+git clone --recurse-submodules https://github.com/muntalee/sample-c-cpp-project
+```
+
 ## Install
 
 * **Ubuntu / Debian**
